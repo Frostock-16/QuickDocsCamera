@@ -42,7 +42,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.quickdocs.camera.data.models.SelectionState
 import com.quickdocs.camera.presentation.ui.components.DocumentGrid
@@ -168,7 +167,7 @@ fun HomeScreen(
 
             colors = TopAppBarDefaults.topAppBarColors(
                 containerColor = if (selectionState.isSelectionMode) {
-                    MaterialTheme.colorScheme.primaryContainer
+                    MaterialTheme.colorScheme.surfaceContainer
                 } else {
                     MaterialTheme.colorScheme.surface
                 },
@@ -368,7 +367,6 @@ private fun FullScreenContent(
     if (document != null) {
         FullScreenImageViewer(
             document = document,
-            onBackClick = onBackClick,
             onDeleteClick = { onDeleteClick(document) },
             onShareClick = { onShareClick(document) }
         )
