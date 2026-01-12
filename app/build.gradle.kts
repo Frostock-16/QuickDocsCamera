@@ -82,6 +82,9 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.48")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     implementation(libs.hilt.android)
+    implementation(libs.material3)
+    implementation(libs.androidx.foundation)
+    implementation(libs.androidx.animation)
     kapt("com.google.dagger:hilt-compiler:2.48")
 
     // Room Database

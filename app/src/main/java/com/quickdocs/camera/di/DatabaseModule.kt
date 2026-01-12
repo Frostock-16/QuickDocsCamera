@@ -1,9 +1,9 @@
 package com.quickdocs.camera.di
 
 import android.content.Context
-import androidx.room.Room
 import com.quickdocs.camera.data.database.QuickDocsDatabase
 import com.quickdocs.camera.data.database.dao.DocumentDao
+import com.quickdocs.camera.data.database.dao.NotesDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,16 +17,17 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun provideQuickDocsDatabase(@ApplicationContext context: Context): QuickDocsDatabase {
-        return Room.databaseBuilder(
-            context.applicationContext,
-            QuickDocsDatabase::class.java,
-            QuickDocsDatabase.DATABASE_NAME
-        ).build()
+    fun provideQuickDocsDatabase(
+        @ApplicationContext context: Context
+    ): QuickDocsDatabase {
+        return QuickDocsDatabase.getDatabase(context)
     }
 
     @Provides
-    fun provideDocumentDao(database: QuickDocsDatabase): DocumentDao {
-        return database.documentDao()
-    }
+    fun provideDocumentDao(database: QuickDocsDatabase): DocumentDao =
+        database.documentDao()
+
+    @Provides
+    fun provideNotesDao(database: QuickDocsDatabase): NotesDao =
+        database.notesDao()
 }

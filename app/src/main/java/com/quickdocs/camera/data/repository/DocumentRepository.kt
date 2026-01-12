@@ -2,7 +2,7 @@ package com.quickdocs.camera.data.repository
 
 import com.quickdocs.camera.data.database.dao.DocumentDao
 import com.quickdocs.camera.data.database.entities.DocumentEntity
-import com.quickdocs.camera.data.models.DocumentFolder
+import com.quickdocs.camera.domain.models.DocumentFolder
 import com.quickdocs.camera.domain.repository.IDocumentRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

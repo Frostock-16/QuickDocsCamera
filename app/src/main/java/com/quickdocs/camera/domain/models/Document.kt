@@ -1,4 +1,4 @@
-package com.quickdocs.camera.data.models
+package com.quickdocs.camera.domain.models
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

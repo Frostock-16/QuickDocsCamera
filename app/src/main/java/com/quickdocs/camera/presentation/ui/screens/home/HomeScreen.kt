@@ -42,8 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import com.quickdocs.camera.data.models.SelectionState
+import com.quickdocs.camera.domain.models.SelectionState
 import com.quickdocs.camera.presentation.ui.components.DocumentGrid
 import com.quickdocs.camera.presentation.ui.components.FolderCard
 import com.quickdocs.camera.presentation.ui.components.FullScreenImageViewer
@@ -51,8 +50,7 @@ import com.quickdocs.camera.presentation.ui.components.FullScreenImageViewer
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel,
-    navController: NavController
+    viewModel: HomeViewModel
 ) {
     val context = LocalContext.current
     val galleryState by viewModel.galleryState.collectAsState()
@@ -206,7 +204,6 @@ fun HomeScreen(
                 FullScreenContent(
                     documentId = (viewMode as GalleryViewMode.FullScreenImage).documentId,
                     galleryState = galleryState,
-                    onBackClick = { viewModel.navigateBack() },
                     onDeleteClick = { document ->
                         viewModel.deleteDocument(document)
                         viewModel.navigateBack()
@@ -357,7 +354,6 @@ private fun DocumentGridContent(
 private fun FullScreenContent(
     documentId: Long,
     galleryState: GalleryState,
-    onBackClick: () -> Unit,
     onDeleteClick: (com.quickdocs.camera.data.database.entities.DocumentEntity) -> Unit,
     onShareClick: (com.quickdocs.camera.data.database.entities.DocumentEntity) -> Unit
 ) {

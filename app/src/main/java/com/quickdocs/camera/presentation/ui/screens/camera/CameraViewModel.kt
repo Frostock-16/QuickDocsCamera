@@ -5,8 +5,8 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.quickdocs.camera.data.models.CameraState
-import com.quickdocs.camera.data.models.DocumentFolder
+import com.quickdocs.camera.domain.models.CameraState
+import com.quickdocs.camera.domain.models.DocumentFolder
 import com.quickdocs.camera.domain.usecases.GetFoldersUseCase
 import com.quickdocs.camera.domain.usecases.SaveDocumentUseCase
 import com.quickdocs.camera.presentation.utils.Constants
@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.io.File
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
 

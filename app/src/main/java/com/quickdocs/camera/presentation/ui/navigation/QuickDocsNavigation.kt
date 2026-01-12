@@ -1,9 +1,16 @@
 package com.quickdocs.camera.presentation.ui.navigation
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraAlt
+import androidx.compose.material.icons.filled.NoteAlt
 import androidx.compose.material.icons.filled.PhotoLibrary
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -14,6 +21,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -22,14 +30,20 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.quickdocs.camera.presentation.ui.screens.camera.CameraScreen
 import com.quickdocs.camera.presentation.ui.screens.camera.CameraViewModel
 import com.quickdocs.camera.presentation.ui.screens.home.HomeScreen
 import com.quickdocs.camera.presentation.ui.screens.home.HomeViewModel
+import com.quickdocs.camera.presentation.ui.screens.note.ArchiveScreen
+import com.quickdocs.camera.presentation.ui.screens.note.EditNoteScreen
+import com.quickdocs.camera.presentation.ui.screens.note.NoteScreen
+import com.quickdocs.camera.presentation.ui.screens.note.NotesViewModel
 
 @Composable
 fun QuickDocsNavigation(
@@ -48,14 +62,32 @@ fun QuickDocsNavigation(
         ) {
             NavHost(
                 navController = navController,
-                startDestination = Screen.Camera.route
+                startDestination = Screen.Camera.route,
+                modifier = Modifier,
+                enterTransition = {
+                    slideInVertically(
+                        initialOffsetY = { it / 15 },
+                        animationSpec = tween(200)
+                    ) + fadeIn(animationSpec = tween(200))
+                },
+                exitTransition = {
+                    fadeOut(animationSpec = tween(180)) + scaleOut(
+                        targetScale = 0.97f,
+                        animationSpec = tween(180)
+                    )
+                },
+                popEnterTransition = {
+                    fadeIn(animationSpec = tween(200))
+                },
+                popExitTransition = {
+                    fadeOut(animationSpec = tween(150))
+                }
             ) {
                 // Camera Screen
                 composable(Screen.Camera.route) {
                     val viewModel: CameraViewModel = hiltViewModel()
                     CameraScreen(
-                        viewModel = viewModel,
-                        navController = navController
+                        viewModel = viewModel
                     )
                 }
 
@@ -63,8 +95,56 @@ fun QuickDocsNavigation(
                 composable(Screen.Gallery.route) {
                     val viewModel: HomeViewModel = hiltViewModel()
                     HomeScreen(
-                        viewModel = viewModel,
-                        navController = navController
+                        viewModel = viewModel
+                    )
+                }
+
+                //Note Screen
+                composable(Screen.Note.route){
+                    val viewModel: NotesViewModel = hiltViewModel()
+                    val notes = viewModel.notes.collectAsState().value
+                    NoteScreen(
+                        notes = notes,
+                        onNoteClick = {noteId ->
+                            navController.navigate(Screen.EditNote.passNoteId(noteId))
+                        },
+                        onAddNoteClick = {
+                            navController.navigate(Screen.EditNote.route)
+                        },
+                        onArchiveClick = {
+                            navController.navigate(Screen.Archive.route)
+                        }
+                    )
+                }
+
+                //Archive Screen
+                composable(Screen.Archive.route){
+                    val viewModel: NotesViewModel = hiltViewModel()
+                    val notes = viewModel.notes.collectAsState().value
+                    ArchiveScreen(
+                        notes = notes.filter { it.isArchived },
+                        onNoteClick = {noteId ->
+                            navController.navigate(Screen.EditNote.passNoteId(noteId))
+                        },
+                        onNavigationBack = { navController.popBackStack()}
+                    )
+                }
+
+                composable(Screen.EditNote.route,
+                    arguments = listOf(
+                        navArgument("noteId"){
+                            type = NavType.LongType
+                            defaultValue = -1L
+                        }
+                    )
+                )
+                {
+                    backStackEntry ->
+                    val noteId = backStackEntry.arguments?.getLong("noteId") ?: -1L
+                    EditNoteScreen(
+                        noteId = noteId,
+                        onNavigationBack = { navController.popBackStack()},
+                        viewModel = hiltViewModel()
                     )
                 }
 
@@ -104,6 +184,11 @@ fun BottomNavigationBar(navController: NavController) {
                 title = "Gallery",
                 icon = Icons.Default.PhotoLibrary,
                 route = Screen.Gallery.route
+            ),
+            NavigationItem(
+                title="Note",
+                icon=Icons.Default.NoteAlt,
+                route=Screen.Note.route
             )
         )
 

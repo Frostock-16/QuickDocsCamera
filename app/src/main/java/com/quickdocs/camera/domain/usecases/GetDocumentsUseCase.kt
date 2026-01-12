@@ -20,10 +20,6 @@ class GetDocumentsUseCase @Inject constructor(
         return repository.getDocumentById(documentId)
     }
 
-    fun getFavoriteDocuments(): Flow<List<DocumentEntity>> {
-        return repository.getFavoriteDocuments()
-    }
-
     fun searchDocuments(query: String): Flow<List<DocumentEntity>> {
         return repository.searchDocuments(query)
     }

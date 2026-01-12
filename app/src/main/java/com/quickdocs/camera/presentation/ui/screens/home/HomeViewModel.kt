@@ -4,8 +4,8 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.quickdocs.camera.data.database.entities.DocumentEntity
-import com.quickdocs.camera.data.models.DocumentFolder
-import com.quickdocs.camera.data.models.SelectionState
+import com.quickdocs.camera.domain.models.DocumentFolder
+import com.quickdocs.camera.domain.models.SelectionState
 import com.quickdocs.camera.domain.usecases.DeleteDocumentUseCase
 import com.quickdocs.camera.domain.usecases.GetDocumentsUseCase
 import com.quickdocs.camera.domain.usecases.GetFoldersUseCase

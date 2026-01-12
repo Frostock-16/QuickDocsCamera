@@ -1,4 +1,4 @@
-package com.quickdocs.camera.data.models
+package com.quickdocs.camera.domain.models
 
 data class SelectionState(
     val isSelectionMode:Boolean = false,

@@ -1,7 +1,7 @@
 package com.quickdocs.camera.presentation.ui.screens.home
 
 import com.quickdocs.camera.data.database.entities.DocumentEntity
-import com.quickdocs.camera.data.models.DocumentFolder
+import com.quickdocs.camera.domain.models.DocumentFolder
 
 data class GalleryState(
     val isLoading: Boolean = false,

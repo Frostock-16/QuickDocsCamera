@@ -34,7 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.quickdocs.camera.data.models.DocumentFolder
+import com.quickdocs.camera.domain.models.DocumentFolder
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

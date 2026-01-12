@@ -1,7 +1,7 @@
 package com.quickdocs.camera.domain.repository
 
 import com.quickdocs.camera.data.database.entities.DocumentEntity
-import com.quickdocs.camera.data.models.DocumentFolder
+import com.quickdocs.camera.domain.models.DocumentFolder
 import kotlinx.coroutines.flow.Flow
 
 interface IDocumentRepository {

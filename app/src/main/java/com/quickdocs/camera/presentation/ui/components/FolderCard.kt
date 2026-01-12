@@ -28,7 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.quickdocs.camera.data.models.DocumentFolder
+import com.quickdocs.camera.domain.models.DocumentFolder
 import com.quickdocs.camera.presentation.utils.Constants
 
 @Composable
